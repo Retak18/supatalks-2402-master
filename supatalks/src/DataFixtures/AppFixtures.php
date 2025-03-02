@@ -3,9 +3,10 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\Post;
+use App\Entity\User;
 use App\Entity\Event;
 use App\Entity\Speaker;
-use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -80,6 +81,18 @@ class AppFixtures extends Fixture
                 ->addSpeaker($speakerArray[$i])
                 ;
             $manager->persist($event);
+        }
+
+        //Posts
+        for($i=0; $i < 20; $i++){
+            $po = new Post();
+            $po
+                ->setTitle($faker->sentence(6))
+                ->setContent($faker->paragraphs(3, true))
+                ->setImage($faker->imageUrl(800, 450, 'team'))
+                ->setAuthor($user)
+                ;
+                $manager->persist($po);
         }
         
         $manager->flush();
