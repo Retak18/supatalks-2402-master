@@ -11,8 +11,10 @@
 
 	{% if app.user and post.author == app.user %}
 		<a href="{{ path ('app_post_edit', {id: post.id}) }}">Edit</a>
-		<a href="{{ path ('app_post_delete', {id: post.id}) }}">Delete</a>
-
+		<form action="{{ path('app_post_delete', {id: post.id}) }}" method="POST">
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('delete' ~ post.id) }}">
+			<button type="submit">Delete</button>
+		</form>
 	{% endif %}
 
 {% endblock %}

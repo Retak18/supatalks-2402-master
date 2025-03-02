@@ -47,14 +47,8 @@ final class PostController extends AbstractController{
             'title' => 'Create a new post',
         ]);
     }
-
-    // #[Route('/post/{id}', name: 'app_post', methods:['GET'])]
-    // public function show(Post $post): Response
-    // {   
-    //     return $this->render('post/show.html.twig', [
-    //         'post' => $post,
-    //     ]);
-    // }
+    
+    //Route d'affichage d'un article
     #[Route('/post/{id}', name: 'app_post', methods:['GET'])]
     public function show($id, PostRepository $pr): Response
     {   
@@ -62,6 +56,17 @@ final class PostController extends AbstractController{
             'post' => $pr->find($id),
         ]);
     }
+    //Variante
+    // #[Route('/post/{id}', name: 'app_post', methods:['GET'])]
+    // public function show(Post $post): Response
+    // {   
+    //     return $this->render('post/show.html.twig', [
+    //         'post' => $post,
+    //     ]);
+    // }
+
+    //Route de MaJ d'un article
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/post/{id}/edit', name: 'app_post_edit', methods:['GET', 'POST'])]
     public function edit(Post $post): Response
     {   
@@ -69,7 +74,10 @@ final class PostController extends AbstractController{
             'post' => $post,
         ]);
     }
-    #[Route('/post/{id}/delete', name: 'app_post_delete', methods:['GET', 'POST'])]
+
+//Route de suppression d'un article
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/post/{id}/delete', name: 'app_post_delete', methods:['POST'])]
     public function delete(EntityManagerInterface $em, Request $request, $id, PostRepository $pr): Response
     {   
         $post = $pr->find($id);
