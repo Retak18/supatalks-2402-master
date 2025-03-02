@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+	{{post.title}}
+{% endblock %}
+
+{% block body %}
+
+
+	{{ dump(post) }}
+
+	{% if app.user and post.author == app.user %}
+		<a href="{{ path ('app_post_edit', {id: post.id}) }}">Edit</a>
+		<a href="{{ path ('app_post_delete', {id: post.id}) }}">Delete</a>
+
+	{% endif %}
+
+{% endblock %}
