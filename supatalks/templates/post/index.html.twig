@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All Post!{% endblock %}
+
+{% block body %}
+    {% for item in posts %}
+        {{ dump(item) }}
+        <a href="{{ path('app_post', {id: item.id}) }}">More</a>
+    {% endfor %}
+{% endblock %}
